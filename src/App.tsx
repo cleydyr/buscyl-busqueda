@@ -22,11 +22,27 @@ function App() {
   const [provinceFilter, setProvinceFilter] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
   const [dateFilter, setDateFilter] = useState("");
+  const [provinces, setProvinces] = useState<string[]>([]);
+  const [types, setTypes] = useState<string[]>([]);
+  const [dates, setDates] = useState<string[]>([]);
 
   useEffect(() => {
     import("./data.json").then(({ default: data }: { default: BusLine[] }) => {
       setBusLines(data);
       setFiltered(data);
+
+      // Get distinct values for filters
+      setProvinces(
+        Array.from(new Set(busLines.map((l) => l.province).filter(Boolean)))
+      );
+      setTypes(
+        Array.from(new Set(busLines.map((l) => l.type).filter(Boolean)))
+      );
+      setDates(
+        Array.from(
+          new Set(busLines.map((l) => l.effective_date).filter(Boolean))
+        )
+      );
     });
   }, []);
 
@@ -45,17 +61,6 @@ function App() {
         .filter((line) => !dateFilter || line.effective_date === dateFilter)
     );
   }, [routeFilter, provinceFilter, typeFilter, dateFilter]);
-
-  // Get distinct values for filters
-  const provinces = Array.from(
-    new Set(busLines.map((l) => l.province).filter(Boolean))
-  );
-  const types = Array.from(
-    new Set(busLines.map((l) => l.type).filter(Boolean))
-  );
-  const dates = Array.from(
-    new Set(busLines.map((l) => l.effective_date).filter(Boolean))
-  );
 
   return (
     <main>
