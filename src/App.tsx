@@ -8,6 +8,13 @@ interface BusLine {
   effective_date: string;
 }
 
+function normalizeText(text: string): string {
+  return text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
 function App() {
   const [busLines, setBusLines] = useState<BusLine[]>([]);
   const [filtered, setFiltered] = useState<BusLine[]>([]);
@@ -26,8 +33,10 @@ function App() {
   useEffect(() => {
     let result = busLines;
     if (routeFilter) {
+      const normalizedRouteFilter = normalizeText(routeFilter);
+
       result = result.filter((line) =>
-        line.route?.toLowerCase().includes(routeFilter.toLowerCase())
+        normalizeText(line.route).includes(normalizedRouteFilter)
       );
     }
     if (provinceFilter) {
