@@ -59,6 +59,46 @@ function App() {
         <h1>Líneas de Autobús - BusCyL</h1>
         <p>Filtra por ruta, provincia, tipo y fecha de vigencia.</p>
       </header>
+      <section
+        aria-label="Fuentes de datos"
+        className="sources"
+        style={{ marginTop: "2rem" }}
+      >
+        <h2 style={{ fontSize: "1.1rem" }}>Fuentes de los datos</h2>
+        <p>
+          Las líneas de autobús han sido extraídas de los siguientes documentos
+          oficiales de la Junta de Castilla y León:
+        </p>
+        <ul>
+          <li>
+            <a
+              href="https://www.tramitacastillayleon.jcyl.es/web/jcyl/binarios/353/257/Anexo%20I%20-%20Rutas%201%20sept,0.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Anexo I - Rutas 1 septiembre
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.tramitacastillayleon.jcyl.es/web/jcyl/binarios/887/719/Anexo%20II%20-%20Rutas%2015%20sept,0.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Anexo II - Rutas 15 septiembre
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.tramitacastillayleon.jcyl.es/web/jcyl/binarios/997/516/Anexo%20III%20-%20Rutas%2030%20sept,0.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Anexo III - Rutas 30 septiembre
+            </a>
+          </li>
+        </ul>
+      </section>
       <section aria-label="Filtros" className="filters">
         <label htmlFor="route">Ruta:</label>
         <input
