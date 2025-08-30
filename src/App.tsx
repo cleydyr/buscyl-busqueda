@@ -44,7 +44,7 @@ function App() {
         .filter((line) => !typeFilter || line.type === typeFilter)
         .filter((line) => !dateFilter || line.effective_date === dateFilter)
     );
-  }, [routeFilter, provinceFilter, typeFilter, dateFilter, busLines]);
+  }, [routeFilter, provinceFilter, typeFilter, dateFilter]);
 
   // Get distinct values for filters
   const provinces = Array.from(
