@@ -1,0 +1,147 @@
+name: Check PDF File Updates
+
+on:
+  schedule:
+    # Run every day at 6:00 AM UTC
+    - cron: '0 6 * * *'
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  check-files:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Download and check files
+        run: |
+          # Read current checksums
+          echo "Reading current checksums..."
+          cat file-checksums.json
+          
+          # Function to download file and calculate MD5
+          check_file() {
+            local name="$1"
+            local url="$2" 
+            local expected_md5="$3"
+            local filename=$(echo "$name" | tr ' ' '_' | tr -d ',').pdf
+            
+            echo "Checking $name..."
+            curl -s "$url" -o "$filename"
+            actual_md5=$(md5sum "$filename" | cut -d' ' -f1)
+            
+            echo "Expected: $expected_md5"
+            echo "Actual: $actual_md5"
+            
+            if [ "$expected_md5" != "$actual_md5" ]; then
+              echo "MISMATCH DETECTED for $name"
+              echo "file_changed=true" >> $GITHUB_ENV
+              echo "changed_file=$name" >> $GITHUB_ENV
+              echo "old_md5=$expected_md5" >> $GITHUB_ENV
+              echo "new_md5=$actual_md5" >> $GITHUB_ENV
+              return 1
+            else
+              echo "✓ $name unchanged"
+            fi
+            
+            rm "$filename"
+            return 0
+          }
+          
+          # Check each file
+          failed=false
+          
+          check_file "Anexo I - Rutas 1 sept" \
+            "https://www.tramitacastillayleon.jcyl.es/web/jcyl/binarios/353/257/Anexo%20I%20-%20Rutas%201%20sept,0.pdf" \
+            "1a2cf9bcda0d7ecc4cbce87f21436d71" || failed=true
+            
+          check_file "Anexo II - Rutas 15 sept" \
+            "https://www.tramitacastillayleon.jcyl.es/web/jcyl/binarios/887/719/Anexo%20II%20-%20Rutas%2015%20sept,0.pdf" \
+            "710c4757a66fb54b9d28f771e5bcd9ff" || failed=true
+            
+          check_file "Anexo III - Rutas 30 sept" \
+            "https://www.tramitacastillayleon.jcyl.es/web/jcyl/binarios/997/516/Anexo%20III%20-%20Rutas%2030%20sept,0.pdf" \
+            "bbcb611d64862b70e64150477a1b9e8c" || failed=true
+          
+          if [ "$failed" = true ]; then
+            echo "File changes detected!"
+            exit 1
+          else
+            echo "All files are up to date"
+          fi
+          
+      - name: Create issue if files changed
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            
+            // Read current checksums file to get more details
+            const checksumsPath = path.join(process.cwd(), 'file-checksums.json');
+            const checksums = JSON.parse(fs.readFileSync(checksumsPath, 'utf8'));
+            
+            const changedFile = process.env.changed_file;
+            const oldMd5 = process.env.old_md5;
+            const newMd5 = process.env.new_md5;
+            
+            const issueTitle = `PDF File Update Detected: ${changedFile}`;
+            const issueBody = `
+            ## File Update Detected
+            
+            The PDF file **${changedFile}** has been updated and needs to be processed.
+            
+            **Details:**
+            - **File**: ${changedFile}
+            - **Previous MD5**: \`${oldMd5}\`
+            - **New MD5**: \`${newMd5}\`
+            - **Detection Date**: ${new Date().toISOString().split('T')[0]}
+            
+            **Action Required:**
+            Please download the updated file and extract/update the data accordingly.
+            
+            **File URLs:**
+            ${checksums.files.map(f => `- [${f.name}](${f.url})`).join('\n')}
+            
+            ---
+            *This issue was automatically created by the PDF monitoring workflow.*
+            `;
+            
+            // Check if there's already an open issue for this file
+            const existingIssues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: ['pdf-update']
+            });
+            
+            const existingIssue = existingIssues.data.find(issue => 
+              issue.title.includes(changedFile)
+            );
+            
+            if (existingIssue) {
+              // Update existing issue
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existingIssue.number,
+                body: `
+                ## New Update Detected
+                
+                Another update has been detected for **${changedFile}**:
+                - **New MD5**: \`${newMd5}\`
+                - **Detection Date**: ${new Date().toISOString().split('T')[0]}
+                `
+              });
+            } else {
+              // Create new issue
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: issueTitle,
+                body: issueBody,
+                labels: ['pdf-update', 'automated']
+              });
+            }
