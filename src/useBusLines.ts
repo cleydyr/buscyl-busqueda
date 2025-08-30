@@ -34,24 +34,22 @@ export function useBusLines() {
       setProvinces(
         Array.from(new Set(data.map((l) => l.province).filter(Boolean)))
       );
-      setTypes(
-        Array.from(new Set(data.map((l) => l.type).filter(Boolean)))
-      );
+      setTypes(Array.from(new Set(data.map((l) => l.type).filter(Boolean))));
       setDates(
-        Array.from(
-          new Set(data.map((l) => l.effective_date).filter(Boolean))
-        )
+        Array.from(new Set(data.map((l) => l.effective_date).filter(Boolean)))
       );
     });
   }, []);
 
   useEffect(() => {
+    const normalizedRouteFilter = normalizeText(routeFilter);
+
     setFiltered(
       busLines
         .filter(
           (line) =>
-            !routeFilter ||
-            normalizeText(line.route).includes(normalizeText(routeFilter))
+            !normalizedRouteFilter ||
+            normalizeText(line.route).includes(normalizedRouteFilter)
         )
         .filter((line) => !provinceFilter || line.province === provinceFilter)
         .filter((line) => !typeFilter || line.type === typeFilter)
