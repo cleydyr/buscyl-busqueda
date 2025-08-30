@@ -17,12 +17,10 @@ function App() {
   const [dateFilter, setDateFilter] = useState("");
 
   useEffect(() => {
-    fetch("/data.json")
-      .then((res) => res.json())
-      .then((data: BusLine[]) => {
-        setBusLines(data);
-        setFiltered(data);
-      });
+    import("./data.json").then(({ default: data }: { default: BusLine[] }) => {
+      setBusLines(data);
+      setFiltered(data);
+    });
   }, []);
 
   useEffect(() => {
