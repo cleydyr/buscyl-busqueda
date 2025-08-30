@@ -31,24 +31,19 @@ function App() {
   }, []);
 
   useEffect(() => {
-    let result = busLines;
-    if (routeFilter) {
-      const normalizedRouteFilter = normalizeText(routeFilter);
+    const normalizedRouteFilter = normalizeText(routeFilter);
 
-      result = result.filter((line) =>
-        normalizeText(line.route).includes(normalizedRouteFilter)
-      );
-    }
-    if (provinceFilter) {
-      result = result.filter((line) => line.province === provinceFilter);
-    }
-    if (typeFilter) {
-      result = result.filter((line) => line.type === typeFilter);
-    }
-    if (dateFilter) {
-      result = result.filter((line) => line.effective_date === dateFilter);
-    }
-    setFiltered(result);
+    setFiltered(
+      busLines
+        .filter(
+          (line) =>
+            !routeFilter ||
+            normalizeText(line.route).includes(normalizeText(routeFilter))
+        )
+        .filter((line) => !provinceFilter || line.province === provinceFilter)
+        .filter((line) => !typeFilter || line.type === typeFilter)
+        .filter((line) => !dateFilter || line.effective_date === dateFilter)
+    );
   }, [routeFilter, provinceFilter, typeFilter, dateFilter, busLines]);
 
   // Get distinct values for filters
