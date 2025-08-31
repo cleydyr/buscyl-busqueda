@@ -231,3 +231,22 @@ tr:nth-child(odd) {
   background: #ffffff;
   border-top: 1px solid rgba(255, 220, 0, 0.2);
 }
+
+.disclaimer {
+  margin-top: 3rem;
+  padding: 1rem;
+  text-align: center;
+  border-top: 1px solid rgba(255, 220, 0, 0.3);
+}
+
+.disclaimer p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #782864;
+  font-style: italic;
+}
+
+.disclaimer strong {
+  color: #142828;
+  font-style: normal;
+}

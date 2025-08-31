@@ -154,6 +154,11 @@ function App() {
           </tbody>
         </table>
       </section>
+      <footer className="disclaimer">
+        <p>
+          <strong>Aviso:</strong> Esta es una iniciativa ciudadana independiente y no está respaldada ni avalada por ningún nivel de gobierno.
+        </p>
+      </footer>
     </main>
   );
 }
