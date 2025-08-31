@@ -187,3 +187,44 @@ tr:nth-child(odd) {
   text-decoration: underline;
   color: #782864;
 }
+
+.accordion {
+  border: 2px solid #ffdc00;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.accordion-header {
+  width: 100%;
+  padding: 1rem;
+  background: #142828;
+  color: #ffffff;
+  border: none;
+  text-align: left;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.2s ease;
+}
+
+.accordion-header:hover {
+  background: #782864;
+}
+
+.accordion-icon {
+  transition: transform 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.accordion-icon.open {
+  transform: rotate(180deg);
+}
+
+.accordion-content {
+  padding: 1rem;
+  background: #ffffff;
+  border-top: 1px solid #ffdc00;
+}
