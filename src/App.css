@@ -21,6 +21,7 @@ main {
   color: #222;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  position: relative;
 }
 
 header {
@@ -30,17 +31,21 @@ header {
 }
 
 .github-banner {
-  margin-top: 1rem;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
 }
 
 .github-link {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   background: #24292f;
   color: white;
   text-decoration: none;
-  padding: 0.5rem 1rem;
+  padding: 0.375rem 0.75rem;
   border-radius: 6px;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 500;
   transition: background-color 0.2s ease;
   border: 1px solid #24292f;
