@@ -3,6 +3,7 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  background: #142828;
 }
 
 .logo {
@@ -17,17 +18,27 @@ main {
   margin: 0 auto;
   padding: 1rem;
   font-family: system-ui, Arial, sans-serif;
-  background: #fff;
-  color: #222;
+  background: #ffffff;
+  color: #000000;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   position: relative;
+  border: 2px solid #ffdc00;
 }
 
 header {
   text-align: center;
   margin-bottom: 2rem;
-  color: #222;
+  color: #000000;
+}
+
+header h1 {
+  color: #142828;
+  margin-bottom: 0.5rem;
+}
+
+header p {
+  color: #782864;
 }
 
 .github-banner {
@@ -40,20 +51,20 @@ header {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  background: #24292f;
-  color: white;
+  background: #782864;
+  color: #ffffff;
   text-decoration: none;
   padding: 0.375rem 0.75rem;
   border-radius: 6px;
   font-size: 0.8rem;
   font-weight: 500;
   transition: background-color 0.2s ease;
-  border: 1px solid #24292f;
+  border: 1px solid #782864;
 }
 
 .github-link:hover {
-  background: #32383f;
-  border-color: #32383f;
+  background: #dc1414;
+  border-color: #dc1414;
 }
 
 .filters {
@@ -68,16 +79,25 @@ header {
   min-width: 90px;
   font-weight: bold;
   margin-right: 0.5rem;
-  color: #222;
+  color: #142828;
 }
 
 .filters input,
 .filters select {
   padding: 0.5rem;
   border-radius: 4px;
-  border: 1px solid #ccc;
+  border: 2px solid #ffdc00;
   min-width: 140px;
   max-width: 100%;
+  background: #ffffff;
+  color: #000000;
+}
+
+.filters input:focus,
+.filters select:focus {
+  outline: none;
+  border-color: #dc1414;
+  box-shadow: 0 0 0 2px rgba(220, 20, 20, 0.2);
 }
 
 @media (max-width: 900px) {
@@ -101,29 +121,31 @@ header {
 table {
   width: 100%;
   border-collapse: collapse;
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 2px solid #ffdc00;
 }
 
 th,
 td {
   padding: 0.75rem;
-  border: 1px solid #eaeaea;
+  border: 1px solid #ffdc00;
   text-align: left;
-  color: #222;
+  color: #000000;
 }
 
 th {
-  background: #e0e0e0;
-  color: #222;
+  background: #142828;
+  color: #ffffff;
+  font-weight: bold;
 }
 
 tr:nth-child(even) {
-  background: #f5f5f5;
+  background: #ffffff;
 }
 
 tr:nth-child(odd) {
-  background: #fff;
+  background: rgba(255, 220, 0, 0.1);
 }
 
 @media (max-width: 600px) {
@@ -144,5 +166,24 @@ tr:nth-child(odd) {
 }
 
 .read-the-docs {
-  color: #888;
+  color: #782864;
+}
+
+.sources h2 {
+  color: #142828;
+}
+
+.sources p {
+  color: #000000;
+}
+
+.sources a {
+  color: #dc1414;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.sources a:hover {
+  text-decoration: underline;
+  color: #782864;
 }
