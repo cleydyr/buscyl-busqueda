@@ -189,20 +189,21 @@ tr:nth-child(odd) {
 }
 
 .accordion {
-  border: 2px solid #ffdc00;
-  border-radius: 8px;
+  border: 1px solid rgba(255, 220, 0, 0.3);
+  border-radius: 6px;
   overflow: hidden;
+  margin-bottom: 2rem;
 }
 
 .accordion-header {
   width: 100%;
-  padding: 1rem;
-  background: #142828;
-  color: #ffffff;
+  padding: 0.75rem;
+  background: rgba(255, 220, 0, 0.1);
+  color: #142828;
   border: none;
   text-align: left;
-  font-size: 1.1rem;
-  font-weight: bold;
+  font-size: 0.95rem;
+  font-weight: 500;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
@@ -211,12 +212,14 @@ tr:nth-child(odd) {
 }
 
 .accordion-header:hover {
-  background: #782864;
+  background: rgba(255, 220, 0, 0.2);
 }
 
 .accordion-icon {
   transition: transform 0.2s ease;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
+  color: #142828;
+  opacity: 0.6;
 }
 
 .accordion-icon.open {
@@ -224,7 +227,7 @@ tr:nth-child(odd) {
 }
 
 .accordion-content {
-  padding: 1rem;
+  padding: 0.75rem;
   background: #ffffff;
-  border-top: 1px solid #ffdc00;
+  border-top: 1px solid rgba(255, 220, 0, 0.2);
 }
