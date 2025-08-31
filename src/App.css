@@ -226,6 +226,16 @@ tr:nth-child(odd) {
   transform: rotate(180deg);
 }
 
+.accordion-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.accordion-info-icon {
+  font-size: 0.9rem;
+}
+
 .accordion-content {
   padding: 0.75rem;
   background: #ffffff;

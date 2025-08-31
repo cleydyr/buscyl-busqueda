@@ -15,7 +15,10 @@ export function Accordion({ title, children }: AccordionProps) {
         onClick={() => setIsOpen(!isOpen)}
         aria-expanded={isOpen}
       >
-        <span>{title}</span>
+        <span className="accordion-title">
+          <span className="accordion-info-icon">ℹ️</span>
+          {title}
+        </span>
         <span className={`accordion-icon ${isOpen ? 'open' : ''}`}>▼</span>
       </button>
       {isOpen && (
