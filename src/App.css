@@ -29,6 +29,28 @@ header {
   color: #222;
 }
 
+.github-banner {
+  margin-top: 1rem;
+}
+
+.github-link {
+  display: inline-block;
+  background: #24292f;
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+  border: 1px solid #24292f;
+}
+
+.github-link:hover {
+  background: #32383f;
+  border-color: #32383f;
+}
+
 .filters {
   display: grid;
   grid-template-columns: repeat(4, 1fr);

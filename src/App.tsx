@@ -1,5 +1,6 @@
 import "./App.css";
 import { useBusLines } from "./useBusLines";
+import { GitHubBanner } from "./GitHubBanner";
 
 function App() {
   const {
@@ -20,6 +21,7 @@ function App() {
   return (
     <main>
       <header>
+        <GitHubBanner repoUrl="https://github.com/cleydyr/buscyl-busqueda" />
         <h1>Líneas de Autobús - BusCyL</h1>
         <p>Filtra por ruta, provincia, tipo y fecha de vigencia.</p>
       </header>
