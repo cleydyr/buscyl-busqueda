@@ -1,3 +1,6 @@
+![Build and deploy](https://github.com/cleydyr/buscyl-busqueda/actions/workflows/build-and-deploy.yml/badge.svg)
+![Check PDF updates](https://github.com/cleydyr/buscyl-busqueda/actions/workflows/check-pdf-updates.yml/badge.svg)
+
 # BusCyL - Buscador de Líneas de Autobús
 
 Una iniciativa ciudadana independiente para facilitar la búsqueda de líneas de autobús en Castilla y León.
