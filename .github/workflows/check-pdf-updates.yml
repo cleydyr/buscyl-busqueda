@@ -49,20 +49,13 @@ jobs:
             return 0
           }
           
-          # Check each file
+          # Check each file from JSON configuration
           failed=false
           
-          check_file "Anexo I - Rutas 1 sept" \
-            "https://www.tramitacastillayleon.jcyl.es/web/jcyl/binarios/353/257/Anexo%20I%20-%20Rutas%201%20sept,0.pdf" \
-            "1a2cf9bcda0d7ecc4cbce87f21436d71" || failed=true
-            
-          check_file "Anexo II - Rutas 15 sept" \
-            "https://www.tramitacastillayleon.jcyl.es/web/jcyl/binarios/887/719/Anexo%20II%20-%20Rutas%2015%20sept,0.pdf" \
-            "710c4757a66fb54b9d28f771e5bcd9ff" || failed=true
-            
-          check_file "Anexo III - Rutas 30 sept" \
-            "https://www.tramitacastillayleon.jcyl.es/web/jcyl/binarios/997/516/Anexo%20III%20-%20Rutas%2030%20sept,0.pdf" \
-            "bbcb611d64862b70e64150477a1b9e8c" || failed=true
+          # Read files from JSON and iterate through them
+          while IFS=$'\t' read -r name url md5; do
+            check_file "$name" "$url" "$md5" || failed=true
+          done < <(jq -r '.files[] | [.name, .url, .md5] | @tsv' file-checksums.json)
           
           if [ "$failed" = true ]; then
             echo "File changes detected!"
