@@ -33,8 +33,8 @@ function App() {
       >
         <Accordion title="Fuentes de los datos">
           <p>
-            Las líneas de autobús han sido extraídas de los siguientes documentos
-            oficiales de la Junta de Castilla y León:
+            Las líneas de autobús han sido extraídas de los siguientes
+            documentos oficiales de la Junta de Castilla y León:
           </p>
           <ul>
             <li>
@@ -48,7 +48,7 @@ function App() {
             </li>
             <li>
               <a
-                href="https://www.tramitacastillayleon.jcyl.es/web/jcyl/binarios/887/719/Anexo%20II%20-%20Rutas%2015%20sept,0.pdf"
+                href="https://www.tramitacastillayleon.jcyl.es/web/jcyl/binarios/250/856/Rutas%20bonificaci%C3%B3n%2015%20de%20septiembre,0.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -57,7 +57,7 @@ function App() {
             </li>
             <li>
               <a
-                href="https://www.tramitacastillayleon.jcyl.es/web/jcyl/binarios/997/516/Anexo%20III%20-%20Rutas%2030%20sept,0.pdf"
+                href="https://www.tramitacastillayleon.jcyl.es/web/jcyl/binarios/299/674/ANEXO%203%20Tarjeta%20BUSCYL.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -156,7 +156,8 @@ function App() {
       </section>
       <footer className="disclaimer">
         <p>
-          <strong>Aviso:</strong> Esta es una iniciativa ciudadana independiente y no está respaldada ni avalada por ningún nivel de gobierno.
+          <strong>Aviso:</strong> Esta es una iniciativa ciudadana independiente
+          y no está respaldada ni avalada por ningún nivel de gobierno.
         </p>
       </footer>
     </main>
