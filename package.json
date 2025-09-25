@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "predeploy": "vite build",
+    "predeploy": "npm run aggregate && vite build",
     "deploy": "gh-pages -d dist",
     "aggregate": "npx tsx aggregate-data.ts"
   },
