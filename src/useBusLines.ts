@@ -4,7 +4,6 @@ interface BusLine {
   route: string;
   province: string;
   type: string;
-  effective_date: string;
 }
 
 function normalizeText(text: string): string {
@@ -20,10 +19,8 @@ export function useBusLines() {
   const [routeFilter, setRouteFilter] = useState("");
   const [provinceFilter, setProvinceFilter] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
-  const [dateFilter, setDateFilter] = useState("");
   const [provinces, setProvinces] = useState<string[]>([]);
   const [types, setTypes] = useState<string[]>([]);
-  const [dates, setDates] = useState<string[]>([]);
 
   useEffect(() => {
     import("./data.json").then(({ default: data }: { default: BusLine[] }) => {
@@ -35,9 +32,6 @@ export function useBusLines() {
         Array.from(new Set(data.map((l) => l.province).filter(Boolean)))
       );
       setTypes(Array.from(new Set(data.map((l) => l.type).filter(Boolean))));
-      setDates(
-        Array.from(new Set(data.map((l) => l.effective_date).filter(Boolean)))
-      );
     });
   }, []);
 
@@ -53,9 +47,8 @@ export function useBusLines() {
         )
         .filter((line) => !provinceFilter || line.province === provinceFilter)
         .filter((line) => !typeFilter || line.type === typeFilter)
-        .filter((line) => !dateFilter || line.effective_date === dateFilter)
     );
-  }, [routeFilter, provinceFilter, typeFilter, dateFilter, busLines]);
+  }, [routeFilter, provinceFilter, typeFilter, busLines]);
 
   return {
     filtered,
@@ -65,11 +58,8 @@ export function useBusLines() {
     setProvinceFilter,
     typeFilter,
     setTypeFilter,
-    dateFilter,
-    setDateFilter,
     provinces,
     types,
-    dates,
   };
 }
 

@@ -21,7 +21,7 @@ async function readCsvFile(filePath: string): Promise<BusRoute[]> {
 
     const parser = fs.createReadStream(filePath).pipe(
       parse({
-        // CSV options if any
+        columns: ["route", "province", "concession", "operator", "type"],
       })
     );
 
