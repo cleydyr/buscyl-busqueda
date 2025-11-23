@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import { parse } from "csv-parse";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -11,54 +12,28 @@ interface BusRoute {
   concession: string;
   operator: string;
   type: string;
-  effective_date: string;
 }
 
-// Map CSV filenames to effective dates
-const FILE_DATE_MAP: Record<string, string> = {
-  "data-1.csv": "2025-09-01",
-  "data-15.csv": "2025-09-15",
-  "data-30.csv": "2025-09-30",
-};
-
-function parseCsvLine(line: string): Omit<BusRoute, "effective_date"> | null {
-  const trimmedLine = line.trim();
-  if (!trimmedLine) return null;
-
-  const parts = trimmedLine.split(";");
-  if (parts.length !== 5) {
-    console.warn(`Skipping invalid line: ${line}`);
-    return null;
-  }
-
-  return {
-    route: parts[0].trim(),
-    province: parts[1].trim(),
-    concession: parts[2].trim(),
-    operator: parts[3].trim(),
-    type: parts[4].trim(),
-  };
-}
-
-function readCsvFile(filePath: string, effectiveDate: string): BusRoute[] {
+async function readCsvFile(filePath: string): Promise<BusRoute[]> {
   try {
     const content = fs.readFileSync(filePath, "utf-8");
-    const lines = content.split("\n");
     const routes: BusRoute[] = [];
 
-    for (const line of lines) {
-      const parsedData = parseCsvLine(line);
-      if (parsedData) {
-        routes.push({
-          ...parsedData,
-          effective_date: effectiveDate,
-        });
-      }
+    const parser = fs.createReadStream(filePath).pipe(
+      parse({
+        // CSV options if any
+      })
+    );
+
+    for await (const record of parser) {
+      // Work with each record
+      routes.push(record);
     }
 
     console.log(
       `Processed ${routes.length} routes from ${path.basename(filePath)}`
     );
+
     return routes;
   } catch (error) {
     console.error(`Error reading file ${filePath}:`, error);
@@ -66,7 +41,7 @@ function readCsvFile(filePath: string, effectiveDate: string): BusRoute[] {
   }
 }
 
-function aggregateData(): void {
+async function readData(): Promise<void> {
   const srcDir = path.join(__dirname, "src");
   const outputPath = path.join(srcDir, "data.json");
 
@@ -79,42 +54,35 @@ function aggregateData(): void {
   const allRoutes: BusRoute[] = [];
 
   // Process each CSV file
-  for (const [fileName, effectiveDate] of Object.entries(FILE_DATE_MAP)) {
-    const filePath = path.join(srcDir, fileName);
+  const filePath = path.join(srcDir, "data.csv");
 
-    if (fs.existsSync(filePath)) {
-      const routes = readCsvFile(filePath, effectiveDate);
-      allRoutes.push(...routes);
-    } else {
-      console.warn(`File ${fileName} not found, skipping...`);
-    }
+  if (fs.existsSync(filePath)) {
+    const routes = await readCsvFile(filePath);
+    allRoutes.push(...routes);
+  } else {
+    console.warn(`File data.csv not found, skipping...`);
   }
 
-  // Sort routes by effective_date, then by route name for consistent output
-  allRoutes.sort((a, b) => {
-    if (a.effective_date !== b.effective_date) {
-      return a.effective_date.localeCompare(b.effective_date);
-    }
-    return a.route.localeCompare(b.route);
+  // Removes all new lines from all fields in allRoutes
+  allRoutes.forEach((route) => {
+    Object.keys(route).forEach((key) => {
+      route[key] = route[key].replace(/\n/g, " ").trim();
+    });
   });
 
-  // Write aggregated data to JSON file
+  // Remove all double spaces from all fields in allRoutes
+  allRoutes.forEach((route) => {
+    Object.keys(route).forEach((key) => {
+      route[key] = route[key].replace(/\s{2,}/g, " ").trim();
+    });
+  });
+
+  // Write read data to JSON file
   try {
     fs.writeFileSync(outputPath, JSON.stringify(allRoutes, null, 2), "utf-8");
     console.log(
-      `Successfully aggregated ${allRoutes.length} routes to data.json`
+      `Successfully wrote ${allRoutes.length} routes to data.json file`
     );
-
-    // Print summary statistics
-    const byDate = allRoutes.reduce((acc, route) => {
-      acc[route.effective_date] = (acc[route.effective_date] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
-
-    console.log("Routes by effective date:");
-    for (const [date, count] of Object.entries(byDate)) {
-      console.log(`  ${date}: ${count} routes`);
-    }
   } catch (error) {
     console.error("Error writing data.json:", error);
     process.exit(1);
@@ -123,7 +91,9 @@ function aggregateData(): void {
 
 // Run the aggregation
 if (import.meta.url === `file://${process.argv[1]}`) {
-  console.log("Starting data aggregation...");
-  aggregateData();
-  console.log("Data aggregation completed!");
+  console.log("Starting data reading...");
+  console.time("readData");
+  await readData();
+  console.log("Data reading completed!");
+  console.timeEnd("readData");
 }
