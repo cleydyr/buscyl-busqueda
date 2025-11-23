@@ -1,22 +1,10 @@
 {
   "files": [
     {
-      "name": "Anexo I - Rutas 1 sept",
-      "url": "https://www.tramitacastillayleon.jcyl.es/web/jcyl/binarios/353/257/Anexo%20I%20-%20Rutas%201%20sept,0.pdf",
-      "md5": "1a2cf9bcda0d7ecc4cbce87f21436d71",
-      "last_checked": "2025-09-25"
-    },
-    {
-      "name": "Anexo II - Rutas 15 sept",
-      "url": "https://www.tramitacastillayleon.jcyl.es/web/jcyl/binarios/250/856/Rutas%20bonificaci%C3%B3n%2015%20de%20septiembre,0.pdf",
-      "md5": "92901c149402f9f6cbf4037d86133d6a",
-      "last_checked": "2025-09-25"
-    },
-    {
-      "name": "Anexo III - Rutas 30 sept",
-      "url": "https://www.tramitacastillayleon.jcyl.es/web/jcyl/binarios/299/674/ANEXO%203%20Tarjeta%20BUSCYL.pdf",
-      "md5": "1b393e7efa202feac68cce7012534a98",
-      "last_checked": "2025-09-25"
+      "name": "Rutas+bonificadas+",
+      "url": "https://www.tramitacastillayleon.jcyl.es/web/jcyl/binarios/660/872/Rutas%20bonificadas%20.pdf",
+      "md5": "6ffbd61a22f779b733043f074080e520",
+      "last_checked": "2025-11-23"
     }
   ]
 }
