@@ -36,7 +36,7 @@ function App() {
           <ul>
             <li>
               <a
-                href="https://www.tramitacastillayleon.jcyl.es/web/jcyl/binarios/660/872/Rutas%20bonificadas%20.pdf"
+                href="https://www.tramitacastillayleon.jcyl.es/web/jcyl/binarios/536/472/Rutas%20bonificadas%20,0.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
               >
